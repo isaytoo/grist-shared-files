@@ -2,31 +2,185 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Grist Shared Files - SPI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grist Custom Widgets - by Said Hamadou</title>
   <style>
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 600px; margin: 40px auto; padding: 20px; color: #1e293b; }
-    h1 { font-size: 22px; margin-bottom: 8px; }
-    p { color: #64748b; margin-bottom: 24px; }
-    .file-card { display: flex; align-items: center; gap: 12px; padding: 16px; border: 1px solid #e2e8f0; border-radius: 10px; background: #f8fafc; }
-    .file-card:hover { border-color: #ef4444; }
-    .icon { font-size: 28px; }
-    .info { flex: 1; }
-    .info strong { display: block; font-size: 14px; }
-    .info span { font-size: 12px; color: #94a3b8; }
-    a.dl { padding: 8px 16px; background: #ef4444; color: white; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 13px; }
-    a.dl:hover { background: #dc2626; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+
+    /* Header */
+    .header { background: linear-gradient(135deg, #1e293b 0%, #334155 100%); color: white; padding: 48px 24px; text-align: center; }
+    .header h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .header p { color: #94a3b8; font-size: 15px; max-width: 520px; margin: 0 auto 24px; }
+    .header .badge { display: inline-block; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 12px; color: #cbd5e1; }
+
+    /* Download banner */
+    .download-banner { background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%); padding: 20px 24px; text-align: center; }
+    .download-banner a { display: inline-flex; align-items: center; gap: 10px; color: white; text-decoration: none; font-weight: 700; font-size: 16px; padding: 12px 32px; border: 2px solid rgba(255,255,255,0.4); border-radius: 12px; transition: all 0.2s; }
+    .download-banner a:hover { background: rgba(255,255,255,0.15); border-color: white; }
+    .download-banner .sub { display: block; font-size: 11px; font-weight: 400; color: rgba(255,255,255,0.8); margin-top: 8px; }
+
+    /* Container */
+    .container { max-width: 960px; margin: 0 auto; padding: 40px 24px; }
+    .section-title { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .section-sub { color: #64748b; font-size: 14px; margin-bottom: 32px; }
+
+    /* Widget grid */
+    .widgets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+
+    /* Widget card */
+    .widget-card { background: white; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; transition: all 0.25s; }
+    .widget-card:hover { border-color: #cbd5e1; box-shadow: 0 8px 30px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .widget-card .screenshot { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top; border-bottom: 1px solid #f1f5f9; }
+    .widget-card .card-body { padding: 16px 20px; }
+    .widget-card .card-body h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+    .widget-card .card-body h3 .emoji { font-size: 18px; }
+    .widget-card .card-body .desc { font-size: 12px; color: #64748b; margin-bottom: 12px; line-height: 1.5; }
+    .widget-card .card-body .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .widget-card .card-body .tag { font-size: 10px; padding: 3px 8px; border-radius: 6px; font-weight: 600; }
+    .tag-red { background: #fef2f2; color: #dc2626; }
+    .tag-blue { background: #eff6ff; color: #2563eb; }
+    .tag-green { background: #f0fdf4; color: #16a34a; }
+    .tag-purple { background: #faf5ff; color: #9333ea; }
+    .tag-amber { background: #fffbeb; color: #d97706; }
+
+    /* Links row */
+    .links-row { display: flex; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px solid #f1f5f9; }
+    .links-row a { font-size: 11px; color: #3b82f6; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+    .links-row a:hover { color: #1d4ed8; text-decoration: underline; }
+
+    /* Footer */
+    .footer { text-align: center; padding: 32px 24px; color: #94a3b8; font-size: 12px; border-top: 1px solid #e2e8f0; margin-top: 40px; }
+    .footer a { color: #3b82f6; text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <h1>📦 Fichiers partagés Grist</h1>
-  <p>Fichiers Grist à partager avec la communauté.</p>
-  <div class="file-card">
-    <div class="icon">📄</div>
-    <div class="info">
-      <strong>meswidgets.grist</strong>
-      <span>Document Grist avec widgets personnalisés</span>
-    </div>
-    <a class="dl" href="/meswidgets.grist" download>Télécharger</a>
+
+  <!-- Header -->
+  <div class="header">
+    <h1>Grist Custom Widgets</h1>
+    <p>Widgets personnalisés open-source pour Grist. Importez-les dans votre document Grist pour enrichir votre expérience.</p>
+    <span class="badge">5 widgets disponibles &bull; Open Source &bull; by Said Hamadou (HmD)</span>
   </div>
+
+  <!-- Download banner -->
+  <div class="download-banner">
+    <a href="/meswidgets.grist" download>
+      <span>&#11015;</span> Telecharger meswidgets.grist
+    </a>
+    <div class="sub">Document Grist avec tous les widgets pre-configures &bull; 300 Ko</div>
+  </div>
+
+  <!-- Widgets showcase -->
+  <div class="container">
+    <h2 class="section-title">Les widgets inclus</h2>
+    <p class="section-sub">Chaque widget fonctionne en autonome dans Grist. Cliquez sur les liens pour voir le code source ou tester en ligne.</p>
+
+    <div class="widgets-grid">
+
+      <!-- Import Widget -->
+      <div class="widget-card">
+        <img class="screenshot" src="/img/import.png" alt="Import de donnees">
+        <div class="card-body">
+          <h3><span class="emoji">&#128230;</span> Import de donnees</h3>
+          <div class="desc">Importez vos fichiers Excel (.xlsx, .xls), CSV et JSON directement dans vos tables Grist. Drag & drop, detection automatique des colonnes.</div>
+          <div class="tags">
+            <span class="tag tag-red">Excel</span>
+            <span class="tag tag-green">CSV</span>
+            <span class="tag tag-blue">JSON</span>
+            <span class="tag tag-purple">Drag & Drop</span>
+          </div>
+          <div class="links-row">
+            <a href="https://github.com/isaytoo/grist-import-widget" target="_blank">&#128187; GitHub</a>
+            <a href="https://grist-import-widget.vercel.app/index.html" target="_blank">&#127760; Demo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Doc Template Widget -->
+      <div class="widget-card">
+        <img class="screenshot" src="/img/doc-template.png" alt="Publipostage">
+        <div class="card-body">
+          <h3><span class="emoji">&#128196;</span> Document Template</h3>
+          <div class="desc">Publipostage et generation de documents PDF. Editeur WYSIWYG integre, import Word (.docx), variables dynamiques depuis vos tables Grist.</div>
+          <div class="tags">
+            <span class="tag tag-red">PDF</span>
+            <span class="tag tag-blue">Publipostage</span>
+            <span class="tag tag-purple">WYSIWYG</span>
+            <span class="tag tag-amber">Word</span>
+          </div>
+          <div class="links-row">
+            <a href="https://github.com/isaytoo/grist-doc-template-widget" target="_blank">&#128187; GitHub</a>
+            <a href="https://grist-doc-template-widget.vercel.app/index.html" target="_blank">&#127760; Demo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project Manager Widget -->
+      <div class="widget-card">
+        <img class="screenshot" src="/img/project-manager.png" alt="Gestion de projet">
+        <div class="card-body">
+          <h3><span class="emoji">&#128203;</span> Gestion de Projet</h3>
+          <div class="desc">Kanban, tableau, diagramme de Gantt et templates de taches. Gerez vos projets directement dans Grist avec une interface moderne.</div>
+          <div class="tags">
+            <span class="tag tag-blue">Kanban</span>
+            <span class="tag tag-green">Gantt</span>
+            <span class="tag tag-amber">Templates</span>
+            <span class="tag tag-purple">Equipe</span>
+          </div>
+          <div class="links-row">
+            <a href="https://github.com/isaytoo/grist-project-manager-widget" target="_blank">&#128187; GitHub</a>
+            <a href="https://grist-project-manager-widget.vercel.app/index.html" target="_blank">&#127760; Demo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Access Rules Widget -->
+      <div class="widget-card">
+        <img class="screenshot" src="/img/access-rules.png" alt="Gestion des acces">
+        <div class="card-body">
+          <h3><span class="emoji">&#128274;</span> Gestion des Acces</h3>
+          <div class="desc">Gerez les permissions de lecture/ecriture par table et par colonne. Attributs personnalises, regles visuelles, compatible self-hosted et SaaS.</div>
+          <div class="tags">
+            <span class="tag tag-red">Permissions</span>
+            <span class="tag tag-blue">Tables</span>
+            <span class="tag tag-green">Colonnes</span>
+            <span class="tag tag-purple">Attributs</span>
+          </div>
+          <div class="links-row">
+            <a href="https://github.com/isaytoo/grist-access-rules-widget" target="_blank">&#128187; GitHub</a>
+            <a href="https://grist-access-rules-widget.vercel.app/index.html" target="_blank">&#127760; Demo</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cross-Table Widget -->
+      <div class="widget-card">
+        <img class="screenshot" src="/img/cross-table.png" alt="Tableau croise">
+        <div class="card-body">
+          <h3><span class="emoji">&#128200;</span> Cross-Table Explorer</h3>
+          <div class="desc">Croisez les donnees de plusieurs tables Grist. Selectionnez vos tables, choisissez les colonnes et visualisez les relations entre vos donnees.</div>
+          <div class="tags">
+            <span class="tag tag-blue">Multi-tables</span>
+            <span class="tag tag-green">Croisement</span>
+            <span class="tag tag-amber">Analyse</span>
+          </div>
+          <div class="links-row">
+            <a href="https://github.com/isaytoo/grist-cross-table-widget" target="_blank">&#128187; GitHub</a>
+            <a href="https://grist-cross-table-widget.vercel.app/index.html" target="_blank">&#127760; Demo</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>Cree par <a href="https://github.com/isaytoo" target="_blank">Said Hamadou (HmD)</a> &mdash; 2026</p>
+    <p style="margin-top:4px;">Tous les widgets sont open-source et compatibles Grist self-hosted et SaaS.</p>
+  </div>
+
 </body>
 </html>
