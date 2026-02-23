@@ -15,7 +15,7 @@
 
 File sharing and management widget for Grist. Upload, preview, and download documents directly from your Grist tables.
 
-**Widget URL:** `https://grist-shared-files.vercel.app/index.html`
+**Widget URL:** `https://isaytoo.github.io/grist-shared-files/`
 
 ### 🚀 Quick Start
 
@@ -23,7 +23,7 @@ File sharing and management widget for Grist. Upload, preview, and download docu
 2. Select **"Custom"** as the widget type
 3. Enter the custom widget URL:
    ```
-   https://grist-shared-files.vercel.app/index.html
+   https://isaytoo.github.io/grist-shared-files/
    ```
 4. Set the access level to **"Full document access"**
 5. Done! Start sharing files.
@@ -78,7 +78,7 @@ grist-shared-files/
 
 Widget de partage et gestion de fichiers pour Grist. Uploadez, prévisualisez et téléchargez des documents directement depuis vos tables Grist.
 
-**URL du widget :** `https://grist-shared-files.vercel.app/index.html`
+**URL du widget :** `https://isaytoo.github.io/grist-shared-files/`
 
 ### 🚀 Utilisation rapide
 
@@ -86,7 +86,7 @@ Widget de partage et gestion de fichiers pour Grist. Uploadez, prévisualisez et
 2. Sélectionnez **"Personnalisé"** comme type de widget
 3. Entrez l'URL :
    ```
-   https://grist-shared-files.vercel.app/index.html
+   https://isaytoo.github.io/grist-shared-files/
    ```
 4. Définissez le niveau d'accès sur **"Full document access"**
 5. C'est prêt ! Commencez à partager vos fichiers.
